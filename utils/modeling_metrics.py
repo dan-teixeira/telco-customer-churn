@@ -34,7 +34,18 @@ def vif_tolerance(df: pd.DataFrame, endog: str, drop_columns: list = []):
     return df_metrics.sort_values("vif", ascending=False).reset_index(drop=True)
 
 
-def confusion_matrix(logit_model, cutoff: int, color: str = "Blues"):
+def confusion_matrix(logit_model, cutoff: float, color: str = "Blues"):
+    """
+    Plots a confusion matrix heatmap for a logistic regression model and returns performance metrics.
+
+    Args:
+        logit_model: statsmodels BinaryResults Fitted logistic regression model.
+        cutoff (float): Probability threshold for classifying observation as an event (True).
+        color (str): Heatmap color palette.
+
+    Returns:
+        dict: Accuracy, Sensitivity and Specificity results.
+    """
 
     classified = pd.Series(logit_model.predict() >= cutoff, name="Classified")
 
